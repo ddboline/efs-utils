@@ -14,6 +14,7 @@ BUILD_ROOT=${BASE_DIR}/build/debbuild
 VERSION=1.25-3
 DEB_SYSTEM_RELEASE_PATH=/etc/os-release
 UBUNTU18_REGEX="Ubuntu 18"
+UBUNTU20_REGEX="Ubuntu 20"
 DEBIAN11_REGEX="Debian GNU/Linux bullseye"
 
 echo 'Cleaning deb build workspace'
@@ -30,7 +31,7 @@ mkdir -p ${BUILD_ROOT}/var/log/amazon/efs
 mkdir -p ${BUILD_ROOT}/usr/share/man/man8
 
 if [ -f $DEB_SYSTEM_RELEASE_PATH ] && echo "$(grep PRETTY_NAME $DEB_SYSTEM_RELEASE_PATH)" \
-          | grep -e "$UBUNTU18_REGEX" -e "$DEBIAN11_REGEX"; then
+          | grep -e "$UBUNTU18_REGEX" -e "$UBUNTU20_REGEX" -e "$DEBIAN11_REGEX"; then
     echo 'Correcting python executable'
     sed -i -e 's/python|python2/python3/' dist/amazon-efs-utils.control
     # Replace the first line in .py to "#!/usr/bin/env python3" no matter what it was before
@@ -73,7 +74,7 @@ tar czf data.tar.gz etc sbin usr var --owner=0 --group=0
 cd ${BASE_DIR}
 
 echo 'Building deb'
-DEB=${BUILD_ROOT}/amazon-efs-utils-${VERSION}.deb
+DEB=${BUILD_ROOT}/amazon-efs-utils_${VERSION}.deb
 ar r ${DEB} ${BUILD_ROOT}/debian-binary
 ar r ${DEB} ${BUILD_ROOT}/control.tar.gz
 ar r ${DEB} ${BUILD_ROOT}/data.tar.gz
