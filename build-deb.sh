@@ -75,7 +75,7 @@ tar czf data.tar.gz etc sbin usr var --owner=0 --group=0
 cd ${BASE_DIR}
 
 echo 'Building deb'
-DEB=${BUILD_ROOT}/amazon-efs-utils-${VERSION}-${RELEASE}_all.deb
+DEB=${BUILD_ROOT}/amazon-efs-utils_${VERSION}-${RELEASE}_all.deb
 ar r ${DEB} ${BUILD_ROOT}/debian-binary
 ar r ${DEB} ${BUILD_ROOT}/control.tar.gz
 ar r ${DEB} ${BUILD_ROOT}/data.tar.gz
